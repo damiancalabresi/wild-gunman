@@ -1,0 +1,78 @@
+package ar.com.badami.wildgunman;
+
+import android.graphics.Typeface;
+import ar.com.badami.framework.Music;
+import ar.com.badami.framework.Pixmap;
+import ar.com.badami.framework.Sound;
+
+public class Assets {
+	// Habría que ver la posibilidad de que se acceda por medio de getters y
+	// setters y que sea un singleton
+	public static Pixmap mainBackground;
+	public static Pixmap background;
+	public static Pixmap title;
+	public static Pixmap eye;
+	public static Pixmap fireLeft;
+	public static Pixmap fireRight;
+	public static Pixmap outlawBillyWalkA;
+	public static Pixmap outlawBillyWalkB;
+	public static Pixmap outlawBillyStand;
+	public static Pixmap outlawBillyUnholster;
+	public static Pixmap outlawBillyAim;
+	public static Pixmap outlawBillyAimNotShine;
+	public static Pixmap outlawBillyAimWin;
+	public static Pixmap outlawBillyFall;
+	public static Pixmap outlawBillyHat;
+	public static Pixmap outlawBobWalkA;
+	public static Pixmap outlawBobWalkB;
+	public static Pixmap outlawBobStand;
+	public static Pixmap outlawBobUnholster;
+	public static Pixmap outlawBobAim;
+	public static Pixmap outlawBobAimNotShine;
+	public static Pixmap outlawBobAimWin;
+	public static Pixmap outlawBobFall;
+	public static Pixmap outlawMarkWalkA;
+	public static Pixmap outlawMarkWalkB;
+	public static Pixmap outlawMarkStand;
+	public static Pixmap outlawMarkUnholster;
+	public static Pixmap outlawMarkAim;
+	public static Pixmap outlawMarkAimNotShine;
+	public static Pixmap outlawMarkAimWin;
+	public static Pixmap outlawMarkFall;
+	public static Pixmap outlawMarkHat;
+	public static Pixmap outlawShefferWalkA;
+	public static Pixmap outlawShefferWalkB;
+	public static Pixmap outlawShefferStand;
+	public static Pixmap outlawShefferUnholster;
+	public static Pixmap outlawShefferAim;
+	public static Pixmap outlawShefferAimNotShine;
+	public static Pixmap outlawShefferAimWin;
+	public static Pixmap outlawShefferFall;
+	public static Pixmap outlawShefferHat;
+	public static Pixmap outlawRandyWalkA;
+	public static Pixmap outlawRandyWalkB;
+	public static Pixmap outlawRandyStand;
+	public static Pixmap outlawRandyUnholster;
+	public static Pixmap outlawRandyAim;
+	public static Pixmap outlawRandyAimNotShine;
+	public static Pixmap outlawRandyAimWin;
+	public static Pixmap outlawRandyFall;
+	public static Pixmap outlawRandyHat;
+	public static Sound bonusPoint;
+	public static Sound doorOpening;
+	public static Sound fire;
+	public static Sound foul;
+	public static Sound gameOver;
+	public static Sound guyFalling;
+	public static Sound guyHitFloor;
+	public static Sound oneOutlawIntro;
+	public static Sound twoOutlawsIntro;
+	public static Sound prepareToShoot;
+	public static Sound shoot;
+	public static Sound youLost;
+	public static Sound youWon;
+	public static Music titleMusic;
+	public static Music prepareToPlay;
+	public static Typeface homesteadInline;
+	public static Typeface homestead;
+}
