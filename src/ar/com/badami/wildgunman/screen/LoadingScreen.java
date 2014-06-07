@@ -74,6 +74,10 @@ public class LoadingScreen extends Screen {
 		Assets.outlawRandyFall = graphics.newPixmap("picture/outlaw/outlaw-randy-fall.png", PixmapFormat.RGB565);
 		Assets.outlawRandyHat = graphics.newPixmap("picture/outlaw/outlaw-randy-hat.png", PixmapFormat.RGB565);
 		Audio audio = game.getAudio();
+		Assets.titleMusic = audio.newMusic("sound/title.mp3");
+		Assets.prepareToPlay = audio.newSound("sound/prepare-to-play.mp3");
+		Assets.oneOutlawIntro = audio.newSound("sound/one-outlaw-intro.mp3");
+		Assets.twoOutlawsIntro = audio.newSound("sound/two-outlaws-intro.mp3");
 		Assets.bonusPoint = audio.newSound("sound/bonus-point.mp3");
 		Assets.doorOpening = audio.newSound("sound/door-opening.mp3");
 		Assets.fire = audio.newSound("sound/fire.mp3");
@@ -81,14 +85,10 @@ public class LoadingScreen extends Screen {
 		Assets.gameOver = audio.newSound("sound/game-over.mp3");
 		Assets.guyFalling = audio.newSound("sound/guy-falling.mp3");
 		Assets.guyHitFloor = audio.newSound("sound/guy-hit-floor.mp3");
-		Assets.oneOutlawIntro = audio.newSound("sound/one-outlaw-intro.mp3");
 		Assets.prepareToShoot = audio.newSound("sound/prepare-to-shoot.mp3");
 		Assets.shoot = audio.newSound("sound/shoot.mp3");
-		Assets.twoOutlawsIntro = audio.newSound("sound/two-outlaws-intro.mp3");
 		Assets.youLost = audio.newSound("sound/you-lost.mp3");
 		Assets.youWon = audio.newSound("sound/you-won.mp3");
-		Assets.titleMusic = audio.newMusic("sound/title.mp3");
-		Assets.prepareToPlay = audio.newMusic("sound/prepare-to-play.mp3");
 
 		// Carga las settings
 		Settings.load(game.getFileIO());

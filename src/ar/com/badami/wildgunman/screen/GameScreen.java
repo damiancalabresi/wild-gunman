@@ -2,7 +2,6 @@ package ar.com.badami.wildgunman.screen;
 
 import java.util.List;
 
-import android.util.Log;
 import ar.com.badami.framework.Game;
 import ar.com.badami.framework.Graphics;
 import ar.com.badami.framework.Input.TouchEvent;
@@ -40,7 +39,7 @@ public class GameScreen extends Screen {
 		super(game);
 		world = new World();
 		worldView = new WorldView(world);
-		Assets.prepareToPlay.play();
+		Assets.prepareToPlay.play(1.0f);
 	}
 
 	@Override
@@ -62,22 +61,22 @@ public class GameScreen extends Screen {
 		remainingTimeToReady -= deltaTime;
 		remainingSecondsToReady = String.valueOf((int) remainingTimeToReady);
 		if (remainingTimeToReady <= 0.0f) {
-			Assets.prepareToPlay.dispose();
+			Assets.prepareToPlay.stop();
+			playOutlawIntro();
 			state = GameState.Running;
 		}
 	}
 
 	private void updateRunning(List<TouchEvent> touchEvents, float deltaTime) {
 		world.update(deltaTime);
-		Log.d("damian", world.status.toString());
 		int len = touchEvents.size();
 		for (int i = 0; i < len; i++) {
 			TouchEvent event = touchEvents.get(i);
 			if (event.type == TouchEvent.TOUCH_DOWN) {
-				Assets.shoot.play(1.0f);
 				updateSizeInPixels();
 				float xCoord = (event.x * World.WORLD_WIDTH) / pixelsWidth;
 				float yCoord = (event.y * World.WORLD_HEIGHT) / pixelsHeight;
+				Assets.shoot.play(1.0f);
 				world.shoot(xCoord, yCoord);
 			}
 		}
@@ -86,8 +85,12 @@ public class GameScreen extends Screen {
 
 	public void resetWorldIfFinished() {
 		if (world.status == RoundStatus.finished) {
-			world.init();
-			worldView.init(world);
+			GameScreen newGameScreen = new GameScreen(game);
+			newGameScreen.remainingTimeToReady = 0.0f;
+			game.setScreen(newGameScreen);
+			// world.init();
+			// worldView.init(world);
+			// playOutlawIntro();
 		}
 	}
 
@@ -144,21 +147,36 @@ public class GameScreen extends Screen {
 		Graphics g = game.getGraphics();
 	}
 
+	public void playOutlawIntro() {
+		if (world.hasTwoOutlaws) {
+			Assets.twoOutlawsIntro.play(1.0f);
+		} else {
+			Assets.oneOutlawIntro.play(1.0f);
+		}
+	}
+
 	@Override
 	public void pause() {
 		// Es el metodo al que se llama si se pausa la activity
 		if (state == GameState.Running)
 			state = GameState.Paused;
+		Assets.prepareToPlay.pause();
+		Assets.oneOutlawIntro.pause();
+		Assets.twoOutlawsIntro.pause();
 		Settings.save(game.getFileIO());
 	}
 
 	@Override
 	public void resume() {
-
+		Assets.prepareToPlay.resume();
+		Assets.oneOutlawIntro.resume();
+		Assets.twoOutlawsIntro.resume();
 	}
 
 	@Override
 	public void dispose() {
-
+		Assets.prepareToPlay.stop();
+		Assets.oneOutlawIntro.stop();
+		Assets.twoOutlawsIntro.stop();
 	}
 }

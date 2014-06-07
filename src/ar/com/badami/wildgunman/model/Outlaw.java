@@ -1,17 +1,17 @@
 package ar.com.badami.wildgunman.model;
 
-import android.util.Log;
 import ar.com.badami.framework.utils.Random;
+import ar.com.badami.wildgunman.Assets;
 
 public class Outlaw {
 
 	private static float SPEED_PER_SEC = 1.5f;
-	public static float MIN_TIME_STANDING = 0.2f;
+	public static float MIN_TIME_STANDING = 0.15f;
 	public static float MAX_TIME_STANDING = 1.0f;
-	public static float MIN_TIME_UNHOLSTER = 0.2f;
-	public static float MAX_TIME_UNHOLSTER = 1.0f;
+	public static float MIN_TIME_UNHOLSTER = 0.15f;
+	public static float MAX_TIME_UNHOLSTER = 0.5f;
 	public static float MIN_TIME_SHOOT = 0.2f;
-	public static float MAX_TIME_SHOOT = 1.0f;
+	public static float MAX_TIME_SHOOT = 0.5f;
 	public static float TIME_LAUGHING = 2.0f;
 
 	public enum Type {
@@ -77,6 +77,7 @@ public class Outlaw {
 		if (shooted) {
 			if (!hasSaidFire)
 				return true;
+			Assets.guyFalling.play(1.0f);
 			state = State.fallen;
 			acumulatedTimeInState = 0.0f;
 		}
@@ -87,21 +88,21 @@ public class Outlaw {
 		if (state == State.walkLeft) {
 			xPosition -= deltaTime * SPEED_PER_SEC;
 			if ((!hasSaidFire) && xPosition <= xPosToStop) {
-				Log.d("estados", type + " state: " + state + " newState: " + State.stand);
 				state = State.stand;
 				acumulatedTimeInState = 0.0f;
 			}
 		} else if (state == State.walkRight) {
 			xPosition += deltaTime * SPEED_PER_SEC;
 			if ((!hasSaidFire) && xPosition >= xPosToStop) {
-				Log.d("estados", type + " state: " + state + " newState: " + State.stand);
 				state = State.stand;
 				acumulatedTimeInState = 0.0f;
 			}
 		} else if (state == State.stand) {
 			acumulatedTimeInState += deltaTime;
 			if (acumulatedTimeInState > this.timeStanding) {
-				Log.d("estados", type + " state: " + state + " newState: " + State.unholster);
+				Assets.oneOutlawIntro.stop();
+				Assets.twoOutlawsIntro.stop();
+				Assets.fire.play(1.0f);
 				hasSaidFire = true;
 				state = State.unholster;
 				acumulatedTimeInState = 0.0f;

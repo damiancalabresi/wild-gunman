@@ -14,23 +14,16 @@ public class MenuScreen extends Screen {
 
 	private boolean arcadeButtonPressed = false;
 	private boolean adventureButtonPressed = false;
-	private boolean playMusic = true;
 
 	public MenuScreen(Game game) {
 		super(game);
+		Assets.titleMusic.play();
 	}
 
 	@Override
 	public void update(float deltaTime) {
 		List<TouchEvent> touchEvents = game.getInput().getTouchEvents();
 		game.getInput().getKeyEvents();
-
-		if (playMusic) {
-			// Solo lo pone en false si se ejectuo exitosamente (distinto de
-			// cero)
-			Assets.titleMusic.play();
-			playMusic = false;
-		}
 
 		int len = touchEvents.size();
 		for (int i = 0; i < len; i++) {
@@ -42,8 +35,6 @@ public class MenuScreen extends Screen {
 			if (event.type == TouchEvent.TOUCH_UP) {
 				arcadeButtonPressed = adventureButtonPressed = false;
 				if (isInArcadeButton(event.x, event.y)) {
-					Assets.titleMusic.dispose();
-					Assets.shoot.play(1);
 					game.setScreen(new GameScreen(game));
 				}
 			}
@@ -81,16 +72,17 @@ public class MenuScreen extends Screen {
 
 	@Override
 	public void pause() {
+		Assets.titleMusic.pause();
 		Settings.save(game.getFileIO());
 	}
 
 	@Override
 	public void resume() {
-
+		Assets.titleMusic.resumeIfPaused();
 	}
 
 	@Override
 	public void dispose() {
-
+		Assets.titleMusic.stop();
 	}
 }

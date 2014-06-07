@@ -1,6 +1,7 @@
 package ar.com.badami.wildgunman.model;
 
 import ar.com.badami.framework.utils.Random;
+import ar.com.badami.wildgunman.Assets;
 import ar.com.badami.wildgunman.model.Outlaw.State;
 import ar.com.badami.wildgunman.model.Outlaw.Type;
 
@@ -108,8 +109,10 @@ public class World {
 	private void updateRunning(float deltaTime) {
 		for (Outlaw outlaw : outlaws) {
 			outlaw.update(deltaTime);
-			if (outlaw.hasShoot && status == RoundStatus.running)
+			if (outlaw.hasShoot && status == RoundStatus.running) {
+				Assets.youLost.play(1.0f);
 				status = RoundStatus.playerFallen;
+			}
 		}
 		verifyIfPlayerWin();
 	}
@@ -148,8 +151,10 @@ public class World {
 			if (outlaw.state != State.fallen)
 				areAllOutlawsFallen = false;
 		}
-		if (areAllOutlawsFallen)
+		if (areAllOutlawsFallen) {
+			Assets.youWon.play(1.0f);
 			status = RoundStatus.playerWin;
+		}
 	}
 
 	public Outlaw[] getOutlaws() {
@@ -179,6 +184,7 @@ public class World {
 	}
 
 	public void playerFault() {
+		Assets.foul.play(1.0f);
 		status = RoundStatus.playerFault;
 	}
 

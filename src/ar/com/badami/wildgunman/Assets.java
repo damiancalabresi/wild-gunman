@@ -58,6 +58,10 @@ public class Assets {
 	public static Pixmap outlawRandyAimWin;
 	public static Pixmap outlawRandyFall;
 	public static Pixmap outlawRandyHat;
+	public static Music titleMusic;
+	public static Sound prepareToPlay;
+	public static Sound oneOutlawIntro;
+	public static Sound twoOutlawsIntro;
 	public static Sound bonusPoint;
 	public static Sound doorOpening;
 	public static Sound fire;
@@ -65,14 +69,10 @@ public class Assets {
 	public static Sound gameOver;
 	public static Sound guyFalling;
 	public static Sound guyHitFloor;
-	public static Sound oneOutlawIntro;
-	public static Sound twoOutlawsIntro;
 	public static Sound prepareToShoot;
 	public static Sound shoot;
 	public static Sound youLost;
 	public static Sound youWon;
-	public static Music titleMusic;
-	public static Music prepareToPlay;
 	public static Typeface homesteadInline;
 	public static Typeface homestead;
 }

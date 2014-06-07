@@ -3,6 +3,7 @@ package ar.com.badami.framework.impl;
 import java.io.IOException;
 
 import android.content.res.AssetFileDescriptor;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import ar.com.badami.framework.Music;
@@ -12,9 +13,11 @@ public class AndroidMusic implements Music, OnCompletionListener {
 	// Se implementa onCompletionListener para setear isPrepared en false cuando
 	// se termine de reproducir
 	boolean isPrepared = false;
+	boolean isPaused = false;
 
 	public AndroidMusic(AssetFileDescriptor assetDescriptor) {
 		mediaPlayer = new MediaPlayer();
+		mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 		try {
 			mediaPlayer.setDataSource(assetDescriptor.getFileDescriptor(), assetDescriptor.getStartOffset(), assetDescriptor.getLength());
 			mediaPlayer.prepare();
@@ -28,7 +31,7 @@ public class AndroidMusic implements Music, OnCompletionListener {
 	@Override
 	public void dispose() {
 		if (mediaPlayer.isPlaying())
-			mediaPlayer.stop();
+			this.stop();
 		// Si no se hace stop antes del release falla
 		mediaPlayer.release();
 	}
@@ -49,9 +52,18 @@ public class AndroidMusic implements Music, OnCompletionListener {
 	}
 
 	@Override
+	public boolean isPaused() {
+		return isPaused;
+	}
+
+	@Override
 	public void pause() {
-		if (mediaPlayer.isPlaying())
+		if (mediaPlayer.isPlaying()) {
 			mediaPlayer.pause();
+			synchronized (this) {
+				isPaused = true;
+			}
+		}
 	}
 
 	@Override
@@ -63,11 +75,18 @@ public class AndroidMusic implements Music, OnCompletionListener {
 				if (!isPrepared)
 					mediaPlayer.prepare();
 				mediaPlayer.start();
+				isPaused = false;
 			}
 		} catch (IllegalStateException | IOException e) {
 			// Imprime la excepcion pero la aplicacion sigue
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void resumeIfPaused() {
+		if (isPaused)
+			this.play();
 	}
 
 	@Override
@@ -85,6 +104,7 @@ public class AndroidMusic implements Music, OnCompletionListener {
 		mediaPlayer.stop();
 		synchronized (this) {
 			isPrepared = false;
+			isPaused = false;
 		}
 	}
 
@@ -92,6 +112,7 @@ public class AndroidMusic implements Music, OnCompletionListener {
 	public void onCompletion(MediaPlayer player) {
 		synchronized (this) {
 			isPrepared = false;
+			isPaused = false;
 		}
 	}
 }
